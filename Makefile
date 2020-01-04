@@ -182,7 +182,7 @@ else ifeq ($(platform), libnx)
 else ifneq (,$(findstring jetson-nano,$(platform)))
    TARGET := $(TARGET_NAME)_libretro.so
    LDFLAGS += -shared -Wl,--version-script=$(LIBRETRO_DIR)/link.T -Wl,--no-undefined
-   BOARD ?= $(shell cat /proc/cpuinfo | grep -i odroid | awk '{print $$3}')
+   BOARD ?= $(shell cat /proc/cpuinfo | grep -i jetson-nano | awk '{print $$3}')
    GLES = 1
    GL_LIB := -lGLESv2
    WITH_DYNAREC := aarch64
