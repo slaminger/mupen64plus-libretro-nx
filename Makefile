@@ -178,6 +178,22 @@ else ifeq ($(platform), libnx)
    WITH_DYNAREC = aarch64
    STATIC_LINKING = 1
 
+# Nvidia Jetson Nano
+else ifneq (,$(findstring jetson-nano,$(platform)))
+   TARGET := $(TARGET_NAME)_libretro.so
+   LDFLAGS += -shared -Wl,--version-script=$(LIBRETRO_DIR)/link.T -Wl,--no-undefined
+   BOARD ?= $(shell cat /proc/cpuinfo | grep -i odroid | awk '{print $$3}')
+   GLES = 1
+   GL_LIB := -lGLESv2
+   WITH_DYNAREC := aarch64
+   ifneq (,$(findstring jetson-nano,$(BOARD)))
+      # Nvidia Jetson Nano
+      CPUFLAGS += -mcpu=cortex-a57
+   endif
+
+   COREFLAGS += -DOS_LINUX
+   ASFLAGS = -f elf -d ELF_TYPE
+   
 # 64 bit ODROIDs
 else ifneq (,$(findstring odroid64,$(platform)))
    TARGET := $(TARGET_NAME)_libretro.so
