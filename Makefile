@@ -205,6 +205,9 @@ else ifneq (,$(findstring odroid64,$(platform)))
    ifneq (,$(findstring C2,$(BOARD)))
       # ODROID-C2
       CPUFLAGS += -mcpu=cortex-a53
+         ifneq (,$(findstring GO2,$(BOARD)))
+      # ODROID-GO2
+      CPUFLAGS += -mcpu=cortex-a35
    else ifneq (,$(findstring N1,$(BOARD)))
       # ODROID-N1
       CPUFLAGS += -mcpu=cortex-a72.cortex-a53
